@@ -6,12 +6,30 @@
     <title>Torque Driver Capacity Selector</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+        h2 { font-weight: bold; margin-bottom: 20px; }
         .input-container { background: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: inline-block; }
         label { font-weight: bold; margin-right: 10px; }
-        input, select { padding: 6px; margin-right: 20px; }
-        table { width: 100%; border-collapse: collapse; background: #fff; }
+        input, select { padding: 6px; margin-right: 20px; border: 1px solid #ccc; border-radius: 4px; }
+        
+        /* Selection Guide Remark Styling */
+        .remark-container {
+            background-color: #eef2f7;
+            border-left: 4px solid #00b050;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            max-width: fit-content;
+        }
+        .remark-text {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #f2f2f2; }
+        th { background-color: #f2f2f2; font-weight: bold; }
         
         /* Conditional Formatting Styles */
         .status-grey { background-color: #c0c0c0; color: #000; }
@@ -35,6 +53,11 @@
         </select>
     </div>
 
+    <!-- Selection Guide Remark Section -->
+    <div class="remark-container">
+        <p class="remark-text">💡 <strong>Selection Guide:</strong> Choose torque driver within <strong>20%-80%</strong> of its max capacity. Best to choose near <strong>50%</strong>.</p>
+    </div>
+
     <table id="driverTable">
         <thead>
             <tr>
@@ -48,7 +71,8 @@
             </tr>
         </thead>
         <tbody>
-            </tbody>
+            <!-- Data rows will be injected here dynamically -->
+        </tbody>
     </table>
 
     <script>
@@ -60,7 +84,8 @@
             .then(data => {
                 driversData = data;
                 renderTable(); // Initial render
-            });
+            })
+            .catch(error => console.error("Error loading drivers data:", error));
 
         const torqueInput = document.getElementById('torqueInput');
         const unitInput = document.getElementById('unitInput');
@@ -78,32 +103,28 @@
 
             driversData.forEach(driver => {
                 let targetInLbs = 0;
-                let targetNm = 0;
 
                 if (!isNaN(targetVal)) {
                     if (targetUnit === 'in-lbs') {
                         targetInLbs = targetVal;
-                        targetNm = targetVal / 8.85074579;
                     } else {
-                        targetNm = targetVal;
                         targetInLbs = targetVal * 8.85074579;
                     }
                 }
 
-                // Calculate Capacity % based on the unit context
+                // Calculate Capacity % based on max capacity context
                 let capacityPct = 0;
                 let cellText = "-";
                 let statusClass = "";
 
                 if (!isNaN(targetVal) && targetVal > 0) {
-                    const min = driver.min_in_lbs;
                     const max = driver.max_in_lbs;
                     
                     // Capacity positioning calculation
                     capacityPct = ((targetInLbs / max) * 100);
                     cellText = capacityPct.toFixed(1) + "%";
 
-                    // Apply Excel conditional formatting logic
+                    // Excel conditional formatting logic logic matching image_5eb38d.png
                     if (capacityPct <= 19) {
                         statusClass = "status-grey";
                     } else if (capacityPct > 100) {
