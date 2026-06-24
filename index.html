@@ -28,8 +28,8 @@
 
         /* Table Styling */
         table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #f2f2f2; font-weight: bold; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
+        th { background-color: #f2f2f2; font-weight: bold; line-height: 1.3; }
         
         /* Conditional Formatting Styles */
         .status-grey { background-color: #c0c0c0; color: #000; }
@@ -63,11 +63,11 @@
                 <th>Brand</th>
                 <th>Model</th>
                 <th>Type</th>
-                <th>Min Torque (in-lbs)</th>
-                <th>Max Torque (in-lbs)</th>
-                <th>Min Torque (Nm)</th>
-                <th>Max Torque (Nm)</th>
-                <th>Capacity Position (%)</th>
+                <th>Min Torque<br>(in-lbs)</th>
+                <th>Max Torque<br>(in-lbs)</th>
+                <th>Min Torque<br>(Nm)</th>
+                <th>Max Torque<br>(Nm)</th>
+                <th>Capacity Position<br>(%)</th>
             </tr>
         </thead>
         <tbody>
@@ -77,8 +77,8 @@
     <script>
         let driversData = [];
 
-        // Fetch driver list from external JSON file
-        fetch('drivers.json')
+        /* Added a unique timestamp (?v=...) to prevent browser caching issues */
+        fetch('drivers.json?v=' + new Date().getTime())
             .then(response => response.json())
             .then(data => {
                 driversData = data;
