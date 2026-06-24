@@ -53,7 +53,6 @@
         </select>
     </div>
 
-    <!-- Selection Guide Remark Section -->
     <div class="remark-container">
         <p class="remark-text">💡 <strong>Selection Guide:</strong> Choose torque driver within <strong>20%-80%</strong> of its max capacity. Best to choose near <strong>50%</strong>.</p>
     </div>
@@ -63,6 +62,7 @@
             <tr>
                 <th>Brand</th>
                 <th>Model</th>
+                <th>Type</th>
                 <th>Min Torque (in-lbs)</th>
                 <th>Max Torque (in-lbs)</th>
                 <th>Min Torque (Nm)</th>
@@ -71,8 +71,7 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Data rows will be injected here dynamically -->
-        </tbody>
+            </tbody>
     </table>
 
     <script>
@@ -124,7 +123,7 @@
                     capacityPct = ((targetInLbs / max) * 100);
                     cellText = capacityPct.toFixed(1) + "%";
 
-                    // Excel conditional formatting logic logic matching image_5eb38d.png
+                    // Excel conditional formatting logic
                     if (capacityPct <= 19) {
                         statusClass = "status-grey";
                     } else if (capacityPct > 100) {
@@ -139,6 +138,7 @@
                 const row = `<tr>
                     <td>${driver.brand}</td>
                     <td>${driver.model}</td>
+                    <td>${driver.type || '-'}</td>
                     <td>${driver.min_in_lbs}</td>
                     <td>${driver.max_in_lbs}</td>
                     <td>${driver.min_nm}</td>
