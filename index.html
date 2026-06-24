@@ -11,19 +11,45 @@
         label { font-weight: bold; margin-right: 10px; }
         input, select { padding: 6px; margin-right: 20px; border: 1px solid #ccc; border-radius: 4px; }
         
-        /* Selection Guide Remark Styling */
-        .remark-container {
+        /* Selection Guide & Legend Container */
+        .guide-container {
             background-color: #eef2f7;
             border-left: 4px solid #00b050;
-            padding: 12px 16px;
+            padding: 14px 16px;
             margin-bottom: 20px;
             border-radius: 4px;
             max-width: fit-content;
         }
         .remark-text {
-            margin: 0;
+            margin: 0 0 12px 0;
             font-size: 14px;
             color: #333;
+        }
+
+        /* Legend Layout Styling */
+        .legend-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .legend-flex {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .legend-box {
+            width: 50px;
+            height: 20px;
+            margin-right: 6px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         /* Table Styling */
@@ -31,11 +57,15 @@
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
         th { background-color: #f2f2f2; font-weight: bold; line-height: 1.3; }
         
-        /* Conditional Formatting Styles */
+        /* Color Swatches and Conditional Formatting Colors */
         .status-grey { background-color: #c0c0c0; color: #000; }
-        .status-green { background-color: #00b050; color: #fff; font-weight: bold; }
-        .status-yellow { background-color: #ffff00; color: #000; font-weight: bold; }
-        .status-red { background-color: #ff0000; color: #fff; font-weight: bold; }
+        .status-green { background-color: #00b050; color: #fff; }
+        .status-yellow { background-color: #ffff00; color: #000; }
+        .status-red { background-color: #ff0000; color: #fff; }
+
+        td.status-grey, td.status-green, td.status-yellow, td.status-red {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -53,8 +83,28 @@
         </select>
     </div>
 
-    <div class="remark-container">
+    <div class="guide-container">
         <p class="remark-text">💡 <strong>Selection Guide:</strong> Choose torque driver within <strong>20%-80%</strong> of its max capacity. Best to choose near <strong>50%</strong>.</p>
+        
+        <div class="legend-title">Legend:</div>
+        <div class="legend-flex">
+            <div class="legend-item">
+                <div class="legend-box status-grey"></div>
+                <span>&lt; 20%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box status-green"></div>
+                <span>20% - 80%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box status-yellow"></div>
+                <span>80% - 100%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box status-red"></div>
+                <span>&gt; 100%</span>
+            </div>
+        </div>
     </div>
 
     <table id="driverTable">
@@ -78,12 +128,12 @@
     <script>
         let driversData = [];
 
-        /* Added a unique timestamp (?v=...) to prevent browser caching issues */
+        // Fetch driver list with cache-busting timestamp
         fetch('drivers.json?v=' + new Date().getTime())
             .then(response => response.json())
             .then(data => {
                 driversData = data;
-                renderTable(); // Initial render
+                renderTable(); 
             })
             .catch(error => console.error("Error loading drivers data:", error));
 
@@ -112,7 +162,6 @@
                     }
                 }
 
-                // Calculate Capacity % based on max capacity context
                 let capacityPct = 0;
                 let cellText = "-";
                 let statusClass = "";
@@ -120,18 +169,17 @@
                 if (!isNaN(targetVal) && targetVal > 0) {
                     const max = driver.max_in_lbs;
                     
-                    // Capacity positioning calculation
                     capacityPct = ((targetInLbs / max) * 100);
                     cellText = capacityPct.toFixed(1) + "%";
 
-                    // Excel conditional formatting logic
-                    if (capacityPct <= 19) {
+                    // Excel conditional formatting logic matching configurations
+                    if (capacityPct <= 19.999) {
                         statusClass = "status-grey";
                     } else if (capacityPct > 100) {
                         statusClass = "status-red";
                     } else if (capacityPct >= 80 && capacityPct <= 100) {
                         statusClass = "status-yellow";
-                    } else if (capacityPct > 19 && capacityPct < 80) {
+                    } else if (capacityPct >= 20 && capacityPct < 80) {
                         statusClass = "status-green";
                     }
                 }
