@@ -2,6 +2,7 @@
   {
     "brand": "Checkline",
     "model": "DT-50",
+    "type": "Indicator / Dial",
     "min_in_lbs": 44.3,
     "max_in_lbs": 442.5,
     "min_nm": 5.0,
@@ -10,6 +11,7 @@
   {
     "brand": "Gedore",
     "model": "TSN 10/90",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 17.7,
     "max_in_lbs": 796.6,
     "min_nm": 2.0,
@@ -18,6 +20,7 @@
   {
     "brand": "Makita",
     "model": "DF012DSE",
+    "type": "Auto-Shutoff Clutch",
     "min_in_lbs": 13.3,
     "max_in_lbs": 49.6,
     "min_nm": 1.5,
@@ -26,6 +29,7 @@
   {
     "brand": "Phoenix Contact",
     "model": "1200295",
+    "type": "Click Type",
     "min_in_lbs": 2.7,
     "max_in_lbs": 26.5,
     "min_nm": 0.3,
@@ -34,6 +38,7 @@
   {
     "brand": "Swiss Tool",
     "model": "PB 8317 A",
+    "type": "Indicator / Dial",
     "min_in_lbs": 3.5,
     "max_in_lbs": 30.1,
     "min_nm": 0.4,
@@ -42,6 +47,7 @@
   {
     "brand": "Tohnichi",
     "model": "QL200I-2A",
+    "type": "Click Type",
     "min_in_lbs": 40.0,
     "max_in_lbs": 200.0,
     "min_nm": 4.5,
@@ -50,6 +56,7 @@
   {
     "brand": "Tohnichi",
     "model": "QL25N5",
+    "type": "Click Type",
     "min_in_lbs": 44.3,
     "max_in_lbs": 221.3,
     "min_nm": 5.0,
@@ -58,6 +65,7 @@
   {
     "brand": "Tohnichi",
     "model": "QL5N-MH",
+    "type": "Click Type",
     "min_in_lbs": 8.9,
     "max_in_lbs": 44.3,
     "min_nm": 1.0,
@@ -66,6 +74,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD10I",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 2.0,
     "max_in_lbs": 10.0,
     "min_nm": 0.23,
@@ -74,6 +83,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD120CN",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 1.8,
     "max_in_lbs": 10.6,
     "min_nm": 0.2,
@@ -82,6 +92,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD20Z",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 0.13,
     "max_in_lbs": 2.0,
     "min_nm": 0.015,
@@ -90,6 +101,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD22I",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 4.0,
     "max_in_lbs": 22.0,
     "min_nm": 0.45,
@@ -98,6 +110,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD260CN",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 5.3,
     "max_in_lbs": 23.0,
     "min_nm": 0.6,
@@ -106,6 +119,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD40I",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 10.0,
     "max_in_lbs": 40.0,
     "min_nm": 1.13,
@@ -114,6 +128,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD500CN",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 8.9,
     "max_in_lbs": 44.3,
     "min_nm": 1.0,
@@ -122,6 +137,7 @@
   {
     "brand": "Tohnichi",
     "model": "RTD5I",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 1.0,
     "max_in_lbs": 5.0,
     "min_nm": 0.11,
@@ -130,6 +146,7 @@
   {
     "brand": "Wera",
     "model": "7442",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 26.6,
     "max_in_lbs": 53.1,
     "min_nm": 3.0,
@@ -138,6 +155,7 @@
   {
     "brand": "Wera",
     "model": "7443",
+    "type": "Slip Type (Slipping)",
     "min_in_lbs": 35.4,
     "max_in_lbs": 77.88,
     "min_nm": 4.0,
