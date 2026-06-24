@@ -1,0 +1,146 @@
+[
+  {
+    "brand": "Checkline",
+    "model": "DT-50",
+    "min_in_lbs": 44.3,
+    "max_in_lbs": 442.5,
+    "min_nm": 5.0,
+    "max_nm": 50.0
+  },
+  {
+    "brand": "Gedore",
+    "model": "TSN 10/90",
+    "min_in_lbs": 17.7,
+    "max_in_lbs": 796.6,
+    "min_nm": 2.0,
+    "max_nm": 90.0
+  },
+  {
+    "brand": "Makita",
+    "model": "DF012DSE",
+    "min_in_lbs": 13.3,
+    "max_in_lbs": 49.6,
+    "min_nm": 1.5,
+    "max_nm": 5.6
+  },
+  {
+    "brand": "Phoenix Contact",
+    "model": "1200295",
+    "min_in_lbs": 2.7,
+    "max_in_lbs": 26.5,
+    "min_nm": 0.3,
+    "max_nm": 3.0
+  },
+  {
+    "brand": "Swiss Tool",
+    "model": "PB 8317 A",
+    "min_in_lbs": 3.5,
+    "max_in_lbs": 30.1,
+    "min_nm": 0.4,
+    "max_nm": 3.4
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "QL200I-2A",
+    "min_in_lbs": 40.0,
+    "max_in_lbs": 200.0,
+    "min_nm": 4.5,
+    "max_nm": 22.6
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "QL25N5",
+    "min_in_lbs": 44.3,
+    "max_in_lbs": 221.3,
+    "min_nm": 5.0,
+    "max_nm": 25.0
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "QL5N-MH",
+    "min_in_lbs": 8.9,
+    "max_in_lbs": 44.3,
+    "min_nm": 1.0,
+    "max_nm": 5.0
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD10I",
+    "min_in_lbs": 2.0,
+    "max_in_lbs": 10.0,
+    "min_nm": 0.23,
+    "max_nm": 1.13
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD120CN",
+    "min_in_lbs": 1.8,
+    "max_in_lbs": 10.6,
+    "min_nm": 0.2,
+    "max_nm": 1.2
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD20Z",
+    "min_in_lbs": 0.13,
+    "max_in_lbs": 2.0,
+    "min_nm": 0.015,
+    "max_nm": 0.22
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD22I",
+    "min_in_lbs": 4.0,
+    "max_in_lbs": 22.0,
+    "min_nm": 0.45,
+    "max_nm": 2.49
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD260CN",
+    "min_in_lbs": 5.3,
+    "max_in_lbs": 23.0,
+    "min_nm": 0.6,
+    "max_nm": 2.6
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD40I",
+    "min_in_lbs": 10.0,
+    "max_in_lbs": 40.0,
+    "min_nm": 1.13,
+    "max_nm": 4.52
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD500CN",
+    "min_in_lbs": 8.9,
+    "max_in_lbs": 44.3,
+    "min_nm": 1.0,
+    "max_nm": 5.0
+  },
+  {
+    "brand": "Tohnichi",
+    "model": "RTD5I",
+    "min_in_lbs": 1.0,
+    "max_in_lbs": 5.0,
+    "min_nm": 0.11,
+    "max_nm": 0.56
+  },
+  {
+    "brand": "Wera",
+    "model": "7442",
+    "min_in_lbs": 26.6,
+    "max_in_lbs": 53.1,
+    "min_nm": 3.0,
+    "max_nm": 6.0
+  },
+  {
+    "brand": "Wera",
+    "model": "7443",
+    "min_in_lbs": 35.4,
+    "max_in_lbs": 77.88,
+    "min_nm": 4.0,
+    "max_nm": 8.8
+  }
+]

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torque Driver Capacity Selector</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f9f9f9; }
+        .input-container { background: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: inline-block; }
+        label { font-weight: bold; margin-right: 10px; }
+        input, select { padding: 6px; margin-right: 20px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        
+        /* Conditional Formatting Styles */
+        .status-grey { background-color: #c0c0c0; color: #000; }
+        .status-green { background-color: #00b050; color: #fff; font-weight: bold; }
+        .status-yellow { background-color: #ffff00; color: #000; font-weight: bold; }
+        .status-red { background-color: #ff0000; color: #fff; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>Torque Driver Requirement Matcher</h2>
+    
+    <div class="input-container">
+        <label for="torqueInput">Torque Requirement:</label>
+        <input type="number" id="torqueInput" step="any" placeholder="Enter value">
+        
+        <label for="unitInput">Unit:</label>
+        <select id="unitInput">
+            <option value="in-lbs">in-lbs</option>
+            <option value="Nm">Nm</option>
+        </select>
+    </div>
+
+    <table id="driverTable">
+        <thead>
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Min Torque (in-lbs)</th>
+                <th>Max Torque (in-lbs)</th>
+                <th>Min Torque (Nm)</th>
+                <th>Max Torque (Nm)</th>
+                <th>Capacity Position (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <script>
+        let driversData = [];
+
+        // Fetch driver list from external JSON file
+        fetch('drivers.json')
+            .then(response => response.json())
+            .then(data => {
+                driversData = data;
+                renderTable(); // Initial render
+            });
+
+        const torqueInput = document.getElementById('torqueInput');
+        const unitInput = document.getElementById('unitInput');
+
+        [torqueInput, unitInput].forEach(element => {
+            element.addEventListener('input', renderTable);
+        });
+
+        function renderTable() {
+            const tbody = document.querySelector('#driverTable tbody');
+            tbody.innerHTML = '';
+
+            const targetVal = parseFloat(torqueInput.value);
+            const targetUnit = unitInput.value;
+
+            driversData.forEach(driver => {
+                let targetInLbs = 0;
+                let targetNm = 0;
+
+                if (!isNaN(targetVal)) {
+                    if (targetUnit === 'in-lbs') {
+                        targetInLbs = targetVal;
+                        targetNm = targetVal / 8.85074579;
+                    } else {
+                        targetNm = targetVal;
+                        targetInLbs = targetVal * 8.85074579;
+                    }
+                }
+
+                // Calculate Capacity % based on the unit context
+                let capacityPct = 0;
+                let cellText = "-";
+                let statusClass = "";
+
+                if (!isNaN(targetVal) && targetVal > 0) {
+                    const min = driver.min_in_lbs;
+                    const max = driver.max_in_lbs;
+                    
+                    // Capacity positioning calculation
+                    capacityPct = ((targetInLbs / max) * 100);
+                    cellText = capacityPct.toFixed(1) + "%";
+
+                    // Apply Excel conditional formatting logic
+                    if (capacityPct <= 19) {
+                        statusClass = "status-grey";
+                    } else if (capacityPct > 100) {
+                        statusClass = "status-red";
+                    } else if (capacityPct >= 80 && capacityPct <= 100) {
+                        statusClass = "status-yellow";
+                    } else if (capacityPct > 19 && capacityPct < 80) {
+                        statusClass = "status-green";
+                    }
+                }
+
+                const row = `<tr>
+                    <td>${driver.brand}</td>
+                    <td>${driver.model}</td>
+                    <td>${driver.min_in_lbs}</td>
+                    <td>${driver.max_in_lbs}</td>
+                    <td>${driver.min_nm}</td>
+                    <td>${driver.max_nm}</td>
+                    <td class="${statusClass}">${cellText}</td>
+                </tr>`;
+                
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>
