@@ -31,27 +31,25 @@
             font-size: 13px;
             font-weight: bold;
             color: #555;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .legend-flex {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         .legend-item {
             display: flex;
             align-items: center;
             font-size: 13px;
-            color: #333;
+            font-weight: bold;
         }
-        .legend-circle {
-            width: 14px;
-            height: 14px;
-            margin-right: 8px;
-            border-radius: 50%;
-            display: inline-block;
-            border: 1px solid rgba(0,0,0,0.15);
-            flex-shrink: 0;
+        .legend-box {
+            width: 50px;
+            height: 20px;
+            margin-right: 6px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         /* Table Styling */
@@ -88,4 +86,119 @@
     <div class="guide-container">
         <p class="remark-text">💡 <strong>Selection Guide:</strong> Choose torque driver within <strong>20%-80%</strong> of its max capacity. Best to choose near <strong>50%</strong>.</p>
         
-        <div class="legend-title">Legend & Capacity Zones:</div>
+        <div class="legend-title">Legend:</div>
+        <div class="legend-flex">
+            <div class="legend-item">
+                <div class="legend-box status-grey"></div>
+                <span>&lt; 20%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box status-green"></div>
+                <span>20% - 80%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box status-yellow"></div>
+                <span>80% - 100%</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box status-red"></div>
+                <span>&gt; 100%</span>
+            </div>
+        </div>
+    </div>
+
+    <table id="driverTable">
+        <thead>
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Type</th>
+                <th>Type 2</th>
+                <th>Min Torque<br>(in-lbs)</th>
+                <th>Max Torque<br>(in-lbs)</th>
+                <th>Min Torque<br>(Nm)</th>
+                <th>Max Torque<br>(Nm)</th>
+                <th>Capacity Position<br>(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            </tbody>
+    </table>
+
+    <script>
+        let driversData = [];
+
+        // Fetch driver list with cache-busting timestamp
+        fetch('drivers.json?v=' + new Date().getTime())
+            .then(response => response.json())
+            .then(data => {
+                driversData = data;
+                renderTable(); 
+            })
+            .catch(error => console.error("Error loading drivers data:", error));
+
+        const torqueInput = document.getElementById('torqueInput');
+        const unitInput = document.getElementById('unitInput');
+
+        [torqueInput, unitInput].forEach(element => {
+            element.addEventListener('input', renderTable);
+        });
+
+        function renderTable() {
+            const tbody = document.querySelector('#driverTable tbody');
+            tbody.innerHTML = '';
+
+            const targetVal = parseFloat(torqueInput.value);
+            const targetUnit = unitInput.value;
+
+            driversData.forEach(driver => {
+                let targetInLbs = 0;
+
+                if (!isNaN(targetVal)) {
+                    if (targetUnit === 'in-lbs') {
+                        targetInLbs = targetVal;
+                    } else {
+                        targetInLbs = targetVal * 8.85074579;
+                    }
+                }
+
+                let capacityPct = 0;
+                let cellText = "-";
+                let statusClass = "";
+
+                if (!isNaN(targetVal) && targetVal > 0) {
+                    const max = driver.max_in_lbs;
+                    
+                    capacityPct = ((targetInLbs / max) * 100);
+                    cellText = capacityPct.toFixed(1) + "%";
+
+                    // Excel conditional formatting logic matching configurations
+                    if (capacityPct <= 19.999) {
+                        statusClass = "status-grey";
+                    } else if (capacityPct > 100) {
+                        statusClass = "status-red";
+                    } else if (capacityPct >= 80 && capacityPct <= 100) {
+                        statusClass = "status-yellow";
+                    } else if (capacityPct >= 20 && capacityPct < 80) {
+                        statusClass = "status-green";
+                    }
+                }
+
+                const row = `<tr>
+                    <td>${driver.brand}</td>
+                    <td>${driver.model}</td>
+                    <td>${driver.type || '-'}</td>
+                    <td>${driver.type_2 || '-'}</td>
+                    <td>${driver.min_in_lbs}</td>
+                    <td>${driver.max_in_lbs}</td>
+                    <td>${driver.min_nm}</td>
+                    <td>${driver.max_nm}</td>
+                    <td class="${statusClass}">${cellText}</td>
+                </tr>`;
+                
+                tbody.innerHTML += row;
+            });
+        }
+    </script>
+</body>
+</html>
